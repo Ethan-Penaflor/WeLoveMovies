@@ -1,47 +1,44 @@
-const path = require("path");
-
-require("dotenv").config();
-
-const {
-  DATABASE_URL = "postgresql://welovemovies_9e00_user:h3HPk0opu3HQy7TVLk7AqS0IYy1Ndr4s@dpg-cqca1tt6l47c73d09u3g-a/welovemovies_9e00",
-} = process.env;
+// Update with your config settings.
 
 module.exports = {
+
   development: {
-    client: "postgresql",
-    connection: DATABASE_URL,
-    pool: { min: 0, max: 5 },
+    client: 'sqlite3',
+    connection: {
+      filename: './dev.sqlite3'
+    }
+  },
+
+  staging: {
+    client: 'postgresql',
+    connection: {
+      database: 'my_db',
+      user:     'username',
+      password: 'password'
+    },
+    pool: {
+      min: 2,
+      max: 10
+    },
     migrations: {
-      directory: path.join(__dirname, "src", "db", "migrations"),
-    },
-    seeds: {
-      directory: path.join(__dirname, "src", "db", "seeds"),
-    },
+      tableName: 'knex_migrations'
+    }
   },
 
   production: {
-    client: "postgresql",
-    connection: DATABASE_URL,
-    pool: { min: 0, max: 5 },
-    migrations: {
-      directory: path.join(__dirname, "src", "db", "migrations"),
-    },
-    seeds: {
-      directory: path.join(__dirname, "src", "db", "seeds"),
-    },
-  },
-
-  test: {
-    client: "sqlite3",
+    client: 'postgresql',
     connection: {
-      filename: ":memory:",
+      database: 'my_db',
+      user:     'username',
+      password: 'password'
+    },
+    pool: {
+      min: 2,
+      max: 10
     },
     migrations: {
-      directory: path.join(__dirname, "src", "db", "migrations"),
-    },
-    seeds: {
-      directory: path.join(__dirname, "src", "db", "seeds"),
-    },
-    useNullAsDefault: true,
-  },
+      tableName: 'knex_migrations'
+    }
+  }
+
 };
